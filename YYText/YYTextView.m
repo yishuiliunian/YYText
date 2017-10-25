@@ -1077,7 +1077,7 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
         }
     }
     
-    if (range.asRange.length == 0) {
+    if (!range || range.asRange.length == 0) {
         range = [_innerLayout textRangeByExtendingPosition:position inDirection:UITextLayoutDirectionRight offset:1];
         range = [self _correctedTextRange:range];
         if (range.asRange.length == 0) {
@@ -2425,7 +2425,7 @@ typedef NS_ENUM(NSUInteger, YYTextMoveDirection) {
     CGSize oldSize = self.bounds.size;
     [super setFrame:frame];
     CGSize newSize = self.bounds.size;
-    BOOL changed = _innerContainer.isVerticalForm ? CGSizeEqualToSize(oldSize, newSize) : (oldSize.width != newSize.width);
+    BOOL changed = _innerContainer.isVerticalForm ? (oldSize.height != newSize.height) : (oldSize.width != newSize.width);
     if (changed) {
         [self _updateInnerContainerSize];
         [self _commitUpdate];
